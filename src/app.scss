@@ -1,0 +1,73 @@
+/* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
+
+
+/* Import only what you need from Bulma */
+
+@import "bulma/sass/utilities/_all";
+@import "bulma/sass/base/_all";
+@import "bulma/sass/elements/_all";
+@import "bulma/sass/form/_all";
+@import "bulma/sass/components/_all";
+@import "bulma/sass/grid/_all";
+@import "bulma/sass/helpers/_all";
+@import "bulma/sass/layout/_all";
+.centered-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.wideme {
+    width: 50%;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    display: inline-flex;
+    background: #5747e1;
+    color: white;
+    box-shadow: 1px 3px 4px #E6E6E6;
+    align-items: center;
+}
+
+.navigation {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 25px;
+}
+
+.brand {
+    flex: 1;
+    margin: 0 25px;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    margin-right: 25px;
+}
+
+.link {
+    display: inline-block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.menu li a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.menu li a:hover {
+    text-decoration: underline;
+}
