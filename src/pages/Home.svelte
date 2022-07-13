@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Networks from "../lib/Networks.svelte"; 
     let title = ""
     let description = ""
     function roll() {
@@ -34,3 +35,4 @@
     >
   </div>
 </div>
+<Networks />
