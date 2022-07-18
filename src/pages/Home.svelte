@@ -26,7 +26,7 @@
 <div class="centered-box">
   <div class="p-6 box wideme">
     <h1 class="title">{title}</h1>
-    <h2  class="subtitle">{description}</h2>
+    <h2 class="subtitle">{@html description}</h2>
     <button
       on:click={() => {
         roll();
