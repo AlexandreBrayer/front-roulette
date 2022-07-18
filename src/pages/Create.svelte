@@ -4,10 +4,10 @@
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   let name = "";
   let description = "";
+  let vars = [];
   let tokenValue;
   token.subscribe((value) => {
     tokenValue = value;
-    console.log("token", tokenValue);
   });
   const unsubscribe = token.subscribe((value) => {
     tokenValue = value;
@@ -24,6 +24,11 @@
     });
   };
   function createStrat() {
+    let varsToSend = {}
+    vars.forEach((varItem) => {
+      varsToSend[varItem.name] = varItem.value.split(";")
+    })
+
     fetch(import.meta.env.VITE_API+"/strat", {
       method: "POST",
       headers: {
@@ -33,11 +38,11 @@
       body: JSON.stringify({
         name: name,
         description: description,
+        vars: varsToSend,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         if (data._id) {
           showToast("Success", "Strat created", true);
         } else {
@@ -45,12 +50,35 @@
         }
       })
       .catch((err) => {
-        console.log("error", err);
       })
       .finally(() => {
         name = "";
         description = "";
+        vars = [];
       });
+  }
+  function parseVars() {
+    //find each "%var_name"
+    let regex = /%[a-zA-Z0-9_]+/g;
+    let matches = description.match(regex);
+    let temp = []
+    if (matches) {
+      temp = matches.map((match) => {
+        return {name: match, value: ""};
+      });
+    } else {
+      vars = [];
+    }
+    //remove dupes
+    temp = temp.filter((v, i, a) => a.findIndex((t) => t.name === v.name) === i);
+    //remove all vars that are not in temp
+    vars = vars.filter((v) => temp.find((t) => t.name === v.name));
+    //add new vars to vars
+    for (let i = 0; i < temp.length; i++) {
+      if (!vars.find((v) => v.name === temp[i].name)) {
+        vars.push(temp[i]);
+      }
+    }
   }
 </script>
 
@@ -81,10 +109,24 @@
           class="textarea"
           type="password"
           bind:value={description}
+          on:input={() => parseVars()}
           placeholder="rush jungle juice and juice some jungle"
         />
       </div>
     </div>
+    {#each vars as v, key}
+    <p>{v.name}</p>
+    <div class="field">
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          placeholder="e.g. var1;var2;var3"
+          bind:value={vars[key]["value"]}
+        />
+      </div>
+    </div>
+    {/each}
 
     <button
       on:click={() => {
