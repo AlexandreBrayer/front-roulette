@@ -128,6 +128,7 @@
     </div>
     {/each}
 
+    <div class="tip mb-2">tip : try to add %var_name to your description :)</div>
     <button
       on:click={() => {
         createStrat();

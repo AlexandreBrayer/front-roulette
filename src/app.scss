@@ -11,6 +11,16 @@
 @import "bulma/sass/grid/_all";
 @import "bulma/sass/helpers/_all";
 @import "bulma/sass/layout/_all";
+.tip {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: #333;
+    line-height: 1;
+}
+
 .networks {
     position: fixed;
     bottom: 0;
