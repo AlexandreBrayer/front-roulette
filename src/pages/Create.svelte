@@ -24,7 +24,7 @@
     });
   };
   function createStrat() {
-    fetch("http://88.151.197.165:3001/strat", {
+    fetch(import.meta.env.VITE_API+"/strat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

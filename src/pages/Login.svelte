@@ -17,7 +17,7 @@
   };
 
   function logme() {
-    fetch("http://88.151.197.165:3001/login", {
+    fetch(import.meta.env.VITE_API+"/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

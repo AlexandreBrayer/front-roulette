@@ -3,7 +3,7 @@
     let title = ""
     let description = ""
     function roll() {
-       fetch("http://88.151.197.165:3001/strat/roll", {
+       fetch(import.meta.env.VITE_API+"/strat/roll", {
         method: "GET",
         headers: {
           "Content-Type": "application/json"

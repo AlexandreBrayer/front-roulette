@@ -20,7 +20,7 @@
         showToast("Error", "Missing field or non matching passwords (stupid)", false);
         return
       }
-      fetch("http://88.151.197.165:3001/register", {
+      fetch(import.meta.env.VITE_API+"/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
