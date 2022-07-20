@@ -121,7 +121,7 @@
         <input
           class="input"
           type="text"
-          placeholder="e.g. var1;var2;var3"
+          placeholder="e.g. value1;value2;value3"
           bind:value={vars[key]["value"]}
         />
       </div>
