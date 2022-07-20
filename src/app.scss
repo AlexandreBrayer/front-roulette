@@ -1,14 +1,9 @@
-/* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
-
-
-/* Import only what you need from Bulma */
-
 @import "bulma/sass/utilities/_all";
 @import "bulma/sass/base/_all";
 @import "bulma/sass/elements/_all";
 @import "bulma/sass/form/_all";
 @import "bulma/sass/components/_all";
-@import "bulma/sass/grid/_all";
+// @import "bulma/sass/grid/_all";
 @import "bulma/sass/helpers/_all";
 @import "bulma/sass/layout/_all";
 .tip {
@@ -19,6 +14,30 @@
     font-weight: normal;
     color: #333;
     line-height: 1;
+}
+
+.up-voted {
+    color: rgb(43, 192, 112);
+}
+
+.vote-container {
+    display: inline-block
+}
+
+.down-voted {
+    color: rgb(192, 43, 43);
+}
+
+.up-vote-button {
+    &:hover {
+        color: rgb(43, 192, 112);
+    }
+}
+
+.down-vote-button {
+    &:hover {
+        color: rgb(192, 43, 43);
+    }
 }
 
 .networks {

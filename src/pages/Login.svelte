@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { token } from "../stores/store.js";
+  import { token, user } from "../stores/store.js";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   import { navigate } from "svelte-routing";
   let email = "";
@@ -32,6 +32,7 @@
         if (data.token) {
           token.set(data.token);
           localStorage.setItem("token", data.token);
+          user.set(data)
           navigate("/");
         } else {
           showToast("Error", "Wrong credentials", false);

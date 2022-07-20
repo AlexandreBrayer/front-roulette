@@ -9,4 +9,5 @@
     </a>
     <a href="https://trello.com/b/o6Whq9eb/strat-roulette" target="blank" class="is-info mx-3">
         <FontAwesomeIcon icon={faTrello} size="xl"/>
+    </a>
 </div>

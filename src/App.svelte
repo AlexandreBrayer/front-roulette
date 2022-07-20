@@ -5,9 +5,21 @@
   import Create from "./pages/Create.svelte";
   import Home from "./pages/Home.svelte";
   export let url = "";
-  import { token } from "./stores/store.js";
-  import { onDestroy } from "svelte";
+  import { token , user} from "./stores/store.js";
+  import { onDestroy , onMount} from "svelte";
   let tokenValue;
+  function getUserInfo() {
+    fetch(import.meta.env.VITE_API + "/login", {
+      method: "GET",
+      headers: {
+        Authorization: tokenValue,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        user.set(data);
+      });
+  }
   token.subscribe((value) => {
     tokenValue = value;
     console.log("token", tokenValue);
@@ -16,6 +28,11 @@
     tokenValue = value;
   });
   onDestroy(unsubscribe);
+  onMount(async () => {
+    if (tokenValue) {
+      getUserInfo();
+    }
+  });
   if (localStorage.getItem("token")) {
     token.set(localStorage.getItem("token"));
   }
