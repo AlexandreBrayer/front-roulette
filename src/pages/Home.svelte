@@ -16,6 +16,15 @@
     userData = value;
   });
   onDestroy(unsubscribe);
+  function getStratById() {
+    fetch(import.meta.env.VITE_API + "/strat/" + stratId, {
+      method: "GET"
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        strat = data;
+      });    
+  }
   function roll() {
     fetch(import.meta.env.VITE_API + "/strat/roll", {
       method: "GET",
@@ -45,9 +54,8 @@
         }
       });
   }
-  onMount(() => {
+  onMount(async () => {
     roll();
-    //if user id is on the strat downvoters or upvoters, set voteState
     if (strat.downVoters) {
       if (strat.downVoters.includes(userData.id)) {
         voteState = 2;
@@ -61,10 +69,13 @@
   function onVote(event) {
     if (event.detail.vote == true) {
       voteState = 1;
+      getStratById()
     } else if (event.detail.vote == false) {
       voteState = 2;
+      getStratById()
     } else {
       voteState = 0;
+      getStratById()
     }
   }
 </script>
