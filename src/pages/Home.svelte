@@ -23,6 +23,16 @@
       .then((res) => res.json())
       .then((data) => {
         strat = data;
+        //set the vote state if the userData._id is in the votes array
+        if (userData._id) {
+          if (strat.upVoters.includes(userData._id)) {
+            voteState = 1;
+          } else if (strat.downVoters.includes(userData._id)) {
+            voteState = 2;
+          } else {
+            voteState = 0;
+          }
+        }
       });    
   }
   function roll() {
@@ -66,17 +76,8 @@
       }
     }
   });
-  function onVote(event) {
-    if (event.detail.vote == true) {
-      voteState = 1;
+  function onVote() {
       getStratById()
-    } else if (event.detail.vote == false) {
-      voteState = 2;
-      getStratById()
-    } else {
-      voteState = 0;
-      getStratById()
-    }
   }
 </script>
 

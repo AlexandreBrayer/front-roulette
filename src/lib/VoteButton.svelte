@@ -50,8 +50,7 @@
     .then((data) => {
       if (data.id) {
         dispatch("vote", {
-          id: stratId,
-          vote: voteStyle,
+          id: stratId
         });
         showToast("Success", "Vote registered", true);
       } else {
