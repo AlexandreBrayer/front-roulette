@@ -27,7 +27,6 @@
   }
   token.subscribe((value) => {
     tokenValue = value;
-    console.log("token", tokenValue);
   });
   const unsubscribe = token.subscribe((value) => {
     tokenValue = value;

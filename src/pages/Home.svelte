@@ -51,7 +51,6 @@
         stratId = data._id;
         strat = data;
         voteState = 0;
-        console.log(userData)
         if (strat.downVoters && userData) {
           if (strat.downVoters.includes(userData.id)) {
             voteState = 2;
@@ -66,15 +65,6 @@
   }
   onMount(async () => {
     roll();
-    if (strat.downVoters && userData) {
-      if (strat.downVoters.includes(userData.id)) {
-        voteState = 2;
-      }
-    } else if (strat.upVoters && userData) {
-      if (strat.upVoters.includes(userData.id)) {
-        voteState = 1;
-      }
-    }
   });
   function onVote() {
       getStratById()
