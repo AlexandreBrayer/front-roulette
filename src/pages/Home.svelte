@@ -9,6 +9,7 @@
   let voteState = 0; //0 = neutral, 1 = up, 2 = down
   let userData: any = {};
   let strat: any = {};
+  let side = 0;
   user.subscribe((value) => {
     userData = value;
   });
@@ -35,7 +36,15 @@
       });    
   }
   function roll() {
-    fetch(import.meta.env.VITE_API + "/strat/roll", {
+    let sidepath = "";
+    if (side == 0) {
+      sidepath = "";
+    } else if (side == 1) {
+      sidepath = "ct";
+    } else if (side == 2) {
+      sidepath = "t";
+    }
+    fetch(import.meta.env.VITE_API + "/strat/roll/"+sidepath, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +103,20 @@
         number={strat.downvotes}
       />
     </div>
-    <button
+    
+    <div class="field">
+
+      Chose if you want to get CT or T strats:
+      <input bind:value={side} type="range" min=0 max=2 class="slider"/>
+      {#if side == 0}
+    None
+    {:else if side == 1}
+    CT
+    {:else if side == 2}
+    T
+    {/if}
+  </div>
+  <button
       on:click={() => {
         roll();
       }}

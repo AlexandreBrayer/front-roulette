@@ -6,6 +6,8 @@
   let description = "";
   let vars = [];
   let tokenValue;
+  let ct = true
+  let t = true
   token.subscribe((value) => {
     tokenValue = value;
   });
@@ -24,12 +26,16 @@
     });
   };
   function createStrat() {
-    let varsToSend = {}
+    let varsToSend = {};
     vars.forEach((varItem) => {
-      varsToSend[varItem.name] = varItem.value.split(";")
-    })
+      varsToSend[varItem.name] = varItem.value.split(";");
+    });
+    let side = "none";
+    if (ct != t) {
+      ct ? (side = "ct") : (side = "t");
+    }
 
-    fetch(import.meta.env.VITE_API+"/strat", {
+    fetch(import.meta.env.VITE_API + "/strat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,6 +45,7 @@
         name: name,
         description: description,
         vars: varsToSend,
+        side: side,
       }),
     })
       .then((res) => res.json())
@@ -49,8 +56,7 @@
           showToast("Error", "Strat not created", false);
         }
       })
-      .catch((err) => {
-      })
+      .catch((err) => {})
       .finally(() => {
         name = "";
         description = "";
@@ -61,16 +67,18 @@
     //find each "%var_name"
     let regex = /%[a-zA-Z0-9_]+/g;
     let matches = description.match(regex);
-    let temp = []
+    let temp = [];
     if (matches) {
       temp = matches.map((match) => {
-        return {name: match, value: ""};
+        return { name: match, value: "" };
       });
     } else {
       vars = [];
     }
     //remove dupes
-    temp = temp.filter((v, i, a) => a.findIndex((t) => t.name === v.name) === i);
+    temp = temp.filter(
+      (v, i, a) => a.findIndex((t) => t.name === v.name) === i
+    );
     //remove all vars that are not in temp
     vars = vars.filter((v) => temp.find((t) => t.name === v.name));
     //add new vars to vars
@@ -107,28 +115,43 @@
       <div class="control">
         <textarea
           class="textarea"
-          type="password"
           bind:value={description}
           on:input={() => parseVars()}
           placeholder="rush jungle juice and juice some jungle"
         />
       </div>
     </div>
-    {#each vars as v, key}
-    <p>{v.name}</p>
     <div class="field">
+      <!-- svelte-ignore a11y-label-has-associated-control -->
+      <label class="label">CT/T Strat</label>
       <div class="control">
-        <input
-          class="input"
-          type="text"
-          placeholder="e.g. value1;value2;value3"
-          bind:value={vars[key]["value"]}
-        />
+        <label class="checkbox">
+          <input type="checkbox" bind:checked={ct}/>
+          CT
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" bind:checked={t}/>
+          T
+        </label>
       </div>
     </div>
+    {#each vars as v, key}
+      <p>{v.name}</p>
+      <div class="field">
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            placeholder="e.g. value1;value2;value3"
+            bind:value={vars[key]["value"]}
+          />
+        </div>
+      </div>
     {/each}
 
-    <div class="tip mb-2">tip : try to add %var_name to your description :)</div>
+    <div class="tip mb-2">
+      tip : try to add %var_name to your description :)
+    </div>
     <button
       on:click={() => {
         createStrat();
