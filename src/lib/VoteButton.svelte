@@ -54,7 +54,7 @@
         });
         showToast("Success", "Vote registered", true);
       } else {
-        showToast("Error", "Vote not registered", false);
+        showToast("Error", "You have to be logged to vote", false);
       }
     })
   }
