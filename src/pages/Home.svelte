@@ -23,7 +23,6 @@
       .then((res) => res.json())
       .then((data) => {
         strat = data;
-        //set the vote state if the userData._id is in the votes array
         if (userData._id) {
           if (strat.upVoters.includes(userData._id)) {
             voteState = 1;
@@ -52,12 +51,13 @@
         stratId = data._id;
         strat = data;
         voteState = 0;
-        if (strat.downVoters) {
+        console.log(userData)
+        if (strat.downVoters && userData) {
           if (strat.downVoters.includes(userData.id)) {
             voteState = 2;
           }
         } 
-        if (strat.upVoters) {
+        if (strat.upVoters && userData) {
           if (strat.upVoters.includes(userData.id)) {
             voteState = 1;
           }
@@ -66,11 +66,11 @@
   }
   onMount(async () => {
     roll();
-    if (strat.downVoters) {
+    if (strat.downVoters && userData) {
       if (strat.downVoters.includes(userData.id)) {
         voteState = 2;
       }
-    } else if (strat.upVoters) {
+    } else if (strat.upVoters && userData) {
       if (strat.upVoters.includes(userData.id)) {
         voteState = 1;
       }

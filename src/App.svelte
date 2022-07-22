@@ -5,8 +5,8 @@
   import Create from "./pages/Create.svelte";
   import Home from "./pages/Home.svelte";
   export let url = "";
-  import { token , user} from "./stores/store.js";
-  import { onDestroy , onMount} from "svelte";
+  import { token, user } from "./stores/store.js";
+  import { onDestroy, onMount } from "svelte";
   let tokenValue;
   function getUserInfo() {
     fetch(import.meta.env.VITE_API + "/login", {
@@ -15,10 +15,15 @@
         Authorization: tokenValue,
       },
     })
-      .then((res) => res.json())
-      .then((data) => {
-        user.set(data);
-      });
+      .then(async (res) => {
+        if (res.status == 200) {
+          user.set(await res.json());
+        } else {
+          user.set(null);
+          token.set(null);
+          localStorage.removeItem("token");
+        }
+      })
   }
   token.subscribe((value) => {
     tokenValue = value;
@@ -46,7 +51,7 @@
     <div class="navigation">
       <div class="menu">
         {#if tokenValue == null}
-        <Link class="link" to="/">Home</Link>
+          <Link class="link" to="/">Home</Link>
           <Link class="link" to="/login">Login</Link>
           <Link class="link" to="/register">Register</Link>
         {:else}
@@ -56,11 +61,11 @@
       </div>
     </div>
   </nav>
-  
+
   <div>
     <Route path="/login"><Login /></Route>
     <Route path="/register"><Register /></Route>
-    <Route path="/"><Home/></Route>
+    <Route path="/"><Home /></Route>
     <Route path="/create"><Create /></Route>
   </div>
 </Router>
