@@ -6,7 +6,7 @@
   let password = "";
 
   const showToast = (title: string, description: string, succes: boolean) => {
-    const toast = toasts.add({
+    toasts.add({
       title: title,
       description: description,
       duration: 5000,

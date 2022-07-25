@@ -1,6 +1,7 @@
 <script lang="ts">
   import Networks from "../lib/Networks.svelte";
   import VoteButton from "../lib/VoteButton.svelte";
+  import Selector from "../lib/Selector.svelte";
   import { user } from "../stores/store.js";
   import { onDestroy, onMount } from "svelte";
   let title = "";
@@ -9,7 +10,7 @@
   let voteState = 0; //0 = neutral, 1 = up, 2 = down
   let userData: any = {};
   let strat: any = {};
-  let side = 0;
+  let side = "";
   user.subscribe((value) => {
     userData = value;
   });
@@ -19,7 +20,7 @@
   onDestroy(unsubscribe);
   function getStratById() {
     fetch(import.meta.env.VITE_API + "/strat/" + stratId, {
-      method: "GET"
+      method: "GET",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -33,18 +34,15 @@
             voteState = 0;
           }
         }
-      });    
+      });
   }
   function roll() {
-    let sidepath = "";
-    if (side == 0) {
+    let sidepath = side;
+    if (sidepath == "none") {
       sidepath = "";
-    } else if (side == 1) {
-      sidepath = "ct";
-    } else if (side == 2) {
-      sidepath = "t";
     }
-    fetch(import.meta.env.VITE_API + "/strat/roll/"+sidepath, {
+    console.log(sidepath);
+    fetch(import.meta.env.VITE_API + "/strat/roll/" + sidepath, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +62,7 @@
           if (strat.downVoters.includes(userData.id)) {
             voteState = 2;
           }
-        } 
+        }
         if (strat.upVoters && userData) {
           if (strat.upVoters.includes(userData.id)) {
             voteState = 1;
@@ -76,7 +74,7 @@
     roll();
   });
   function onVote() {
-      getStratById()
+    getStratById();
   }
 </script>
 
@@ -103,20 +101,11 @@
         number={strat.downvotes}
       />
     </div>
-    
-    <div class="field">
+    <div class="mt-6 mb-3">
+      <Selector on:sideChange={(s) => (side = s.detail)} />
+    </div>
 
-      Chose if you want to get CT or T strats:
-      <input bind:value={side} type="range" min=0 max=2 class="slider"/>
-      {#if side == 0}
-    None
-    {:else if side == 1}
-    CT
-    {:else if side == 2}
-    T
-    {/if}
-  </div>
-  <button
+    <button
       on:click={() => {
         roll();
       }}
