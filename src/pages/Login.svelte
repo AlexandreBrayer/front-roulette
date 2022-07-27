@@ -17,7 +17,7 @@
   };
 
   function logme() {
-    fetch(import.meta.env.VITE_API+"/login", {
+    fetch(import.meta.env.VITE_API + "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@
         if (data.token) {
           token.set(data.token);
           localStorage.setItem("token", data.token);
-          user.set(data)
+          user.set(data);
           navigate("/");
         } else {
           showToast("Error", "Wrong credentials", false);
