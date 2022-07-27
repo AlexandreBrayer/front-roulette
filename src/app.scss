@@ -6,6 +6,25 @@
 // @import "bulma/sass/grid/_all";
 @import "bulma/sass/helpers/_all";
 @import "bulma/sass/layout/_all";
+.silver-item-container {
+    width: 60vw;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.silver-banned {
+    background-color: #fca3a3;
+}
+
+.silver-unbanned {
+    background-color: #bdf790;
+}
+
 .tip {
     position: relative;
     margin: 0;
