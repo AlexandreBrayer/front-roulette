@@ -25,6 +25,10 @@
         }
       })
   }
+  function disconnect() {
+    token.set(null);
+    localStorage.removeItem("token"); 
+  }
   token.subscribe((value) => {
     tokenValue = value;
   });
@@ -56,6 +60,7 @@
         {:else}
           <Link class="link" to="/">Home</Link>
           <Link class="link" to="/create">Create</Link>
+          <button on:click={disconnect} class="button is-danger mt-1">Logout</button>
         {/if}
       </div>
     </div>
